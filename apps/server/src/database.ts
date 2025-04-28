@@ -9,6 +9,7 @@ async function connectDatabase() {
 	);
 
 	await mongoose.connect(config.MONGO_URI);
+	// mongoose.connection.dropDatabase();
 }
 
 export { connectDatabase };
