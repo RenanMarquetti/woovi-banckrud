@@ -116,7 +116,16 @@ type Account implements Node {
   accountNumber: String
   userTaxId: String
   owner: User!
+  currencyType: CurrencyType!
   createdAt: String
+}
+
+enum CurrencyType {
+  USD
+  EUR
+  BRL
+  BTC
+  VEF
 }
 
 """A connection to a list of items."""
@@ -151,6 +160,7 @@ type Transaction implements Node {
 type Mutation {
   MessageAdd(input: MessageAddInput!): MessageAddPayload
   UserAdd(input: UserAddInput!): UserAddPayload
+  AccountAdd(input: AccountAddInput!): AccountAddPayload
 }
 
 type MessageAddPayload {
@@ -182,6 +192,17 @@ input UserAddInput {
   password: String!
   passwordConfirmation: String!
   taxId: String!
+  clientMutationId: String
+}
+
+type AccountAddPayload {
+  account: Account
+  clientMutationId: String
+}
+
+input AccountAddInput {
+  taxId: String!
+  currencyType: String!
   clientMutationId: String
 }
 
