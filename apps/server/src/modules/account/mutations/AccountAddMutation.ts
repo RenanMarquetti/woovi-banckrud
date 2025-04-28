@@ -29,14 +29,14 @@ const mutation = mutationWithClientMutationId({
 		
 		if(!taxId || !currencyType) console.log("dados insuficientes");
 
-		const accountExists = await Account.exists({taxId, currencyType});
-		if(accountExists) console.log("a conta já existe");
-
 		const accountNumber = createHash('sha-256').update(Buffer.from(taxId+currencyType), ).digest('base64');
+
+		const accountExists = await Account.exists({ accountNumber });
+		if(accountExists) console.log("a conta já existe");
 
 		const accountUser = await new Account({
 			accountNumber: accountNumber,
-			taxId: taxId,
+			userTaxId: taxId,
 			currencyType: currencyType,
 		}).save();
 

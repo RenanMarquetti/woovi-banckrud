@@ -5,4 +5,7 @@ export const PUB_SUB_EVENTS = {
 	USER: {
 		ADDED: 'USER:ADDED',
 	},
+	ACCOUNT: {
+		ADDED: 'ACCOUNT:ADDED',
+	},
 } as const;

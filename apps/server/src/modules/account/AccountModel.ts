@@ -1,14 +1,6 @@
 import type { Document, Model } from 'mongoose';
 import mongoose from 'mongoose';
 
-export enum CurrencyType {
-	USD,
-	EUR,
-	BRL,
-	BTC,
-	VEF,
-}
-
 export type IAccount = {
 	accountNumber: String;
 	userTaxId: String;

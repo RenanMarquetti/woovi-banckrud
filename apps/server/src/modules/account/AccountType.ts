@@ -5,17 +5,17 @@ import type { ConnectionArguments } from 'graphql-relay';
 import { IAccount } from './AccountModel';
 import { nodeInterface, registerTypeLoader } from '../node/typeRegister';
 import { AccountLoader } from './AccountLoader';
-import { UserModel } from '../user/UserModel';
+import { User } from '../user/UserModel';
 import { UserType } from '../user/UserType';
 
 const CurrencyType = new GraphQLEnumType({
 	name: "CurrencyType",
 	values: {
-		USD: {value: 0},
-		EUR: {value: 1},
-		BRL: {value: 2},
-		BTC: {value: 3},
-		VEF: {value: 4},
+		USD: {value: 'USD'},
+		EUR: {value: 'EUR'},
+		BRL: {value: 'BRL'},
+		BTC: {value: 'BTC'},
+		VEF: {value: 'VEF'},
 	}
 });
 
@@ -35,7 +35,8 @@ const AccountType = new GraphQLObjectType<IAccount>({
 		owner: {
 			type: new GraphQLNonNull(UserType),
 			resolve: async ({userTaxId}) => {
-				return UserModel.findOne({taxId: userTaxId});
+				console.log(userTaxId);
+				return User.findOne({taxId: userTaxId});
 			},
 		},
 		currencyType: {
