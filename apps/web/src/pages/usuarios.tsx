@@ -4,7 +4,6 @@ import { UserListQuery } from '../__generated__/UserListQuery.graphql'
 
 const UserListPage = () => {
 	const { user } = useLazyLoadQuery<UserListQuery>(UserList, {});
-	user.edges.forEach((e) => console.log(e));
 
 	return (
 		<main>
