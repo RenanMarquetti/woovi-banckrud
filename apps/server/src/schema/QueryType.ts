@@ -1,7 +1,7 @@
 import { GraphQLObjectType } from 'graphql';
 
 import { userConnectionField } from '../modules/user/userFields';
-import { accountConnectionField } from '../modules/account/AccountFields';
+import { accountConnectionField } from '../modules/account/accountFields';
 import { transactionConnectionField } from '../modules/transaction/TransactionFields';
 
 export const QueryType = new GraphQLObjectType({
