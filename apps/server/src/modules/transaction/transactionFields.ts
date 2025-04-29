@@ -1,4 +1,4 @@
-import { TranctionType, TransactionConnection } from './TransactionType';
+import { TransactionType, TransactionConnection } from './TransactionType';
 import { TransactionLoader } from './TransactionLoader';
 import { connectionArgs } from 'graphql-relay';
 

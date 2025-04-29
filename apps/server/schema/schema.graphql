@@ -161,6 +161,7 @@ type Mutation {
   MessageAdd(input: MessageAddInput!): MessageAddPayload
   UserAdd(input: UserAddInput!): UserAddPayload
   AccountAdd(input: AccountAddInput!): AccountAddPayload
+  TransactionAdd(input: TransactionAddInput!): TransactionAddPayload
 }
 
 type MessageAddPayload {
@@ -203,6 +204,20 @@ type AccountAddPayload {
 input AccountAddInput {
   taxId: String!
   currencyType: String!
+  clientMutationId: String
+}
+
+type TransactionAddPayload {
+  transaction: Transaction
+  clientMutationId: String
+}
+
+input TransactionAddInput {
+  senderAccountNumber: String!
+  currencyType: CurrencyType!
+  value: String!
+  description: String
+  receiverAccountNumber: String!
   clientMutationId: String
 }
 
