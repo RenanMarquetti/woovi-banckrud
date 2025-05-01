@@ -17,6 +17,10 @@ const Schema = new mongoose.Schema<ITransaction>(
 			ref: "Account",
 			required: true,
 		},
+		currencyType: {
+			type: String,
+			required: true,
+		},
 		value: {
 			type: mongoose.Schema.Types.Decimal128,
 			required: true,
@@ -33,6 +37,7 @@ export type ITransaction = {
 	senderAccountId: mongoose.Schema.Types.ObjectId;
 	receiverAccountId: mongoose.Schema.Types.ObjectId;
 	idempotentKey: string;
+	currencyType: string;
 	value: Decimal128;
 	description?: string;
 	createdAt: Date;

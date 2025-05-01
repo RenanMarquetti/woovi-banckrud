@@ -8,4 +8,7 @@ export const PUB_SUB_EVENTS = {
 	ACCOUNT: {
 		ADDED: 'ACCOUNT:ADDED',
 	},
+	TRANSACTION: {
+		ADDED: 'TRANSACTION:ADDED',
+	},
 } as const;

@@ -8,7 +8,7 @@ import { AccountLoader } from './AccountLoader';
 import { User } from '../user/UserModel';
 import { UserType } from '../user/UserType';
 
-const CurrencyType = new GraphQLEnumType({
+export const CurrencyType = new GraphQLEnumType({
 	name: "CurrencyType",
 	values: {
 		USD: {value: 'USD'},
@@ -35,7 +35,6 @@ const AccountType = new GraphQLObjectType<IAccount>({
 		owner: {
 			type: new GraphQLNonNull(UserType),
 			resolve: async ({userTaxId}) => {
-				console.log(userTaxId);
 				return User.findOne({taxId: userTaxId});
 			},
 		},
