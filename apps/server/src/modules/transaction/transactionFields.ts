@@ -5,8 +5,8 @@ import { connectionArgs } from 'graphql-relay';
 export const transactionField = (key: string) => ({
 	[key]: {
 		type: TransactionType,
-		resolve: async (obj: Record<string, unknown>, _, context) =>
-			TransactionLoader.load(context, obj.id as string),
+		resolve: async (obj: Record<string, unknown>, _, context) => 
+			TransactionLoader.load(context, obj.transaction as string),
 	},
 });
 

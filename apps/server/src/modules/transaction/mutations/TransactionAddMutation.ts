@@ -36,12 +36,12 @@ const mutation = mutationWithClientMutationId({
 		},
 		receiverAccountNumber: {
 			type: new GraphQLNonNull(GraphQLString),
-		},
+		}, 
 	},
 	mutateAndGetPayload: async (args: TransactionAddInput, ctx) => {
-
-		const session = await mongoose.startSession();
-		session.startTransaction();
+		// TODO: implementar transações aqui
+		//const session = await mongoose.startSession();
+		//await session.startTransaction();
 
 		try {
 
@@ -52,8 +52,8 @@ const mutation = mutationWithClientMutationId({
 			
 			const decimalValue = new mongoose.Types.Decimal128(value);
 
-			const senderAccount = Account.findOne({ accountNumber: senderAccountNumber });
-			const receiverAccount = Account.findOne({ accountNumber: receiverAccountNumber });
+			const senderAccount = await Account.findOne({ accountNumber: senderAccountNumber }).exec() // .session(session);
+			const receiverAccount = await Account.findOne({ accountNumber: receiverAccountNumber }).exec() // .session(session);
 
 			if(senderAccount.currencyType != currencyType) console.log("tipo de moeda do sender não corresponde")
 			if(receiverAccount.currencyType != currencyType) console.log("tipo de moeda do receiver não corresponde")
@@ -65,6 +65,7 @@ const mutation = mutationWithClientMutationId({
 
 			
 			const transaction = await new Transaction({
+				idempotentKey: new Date().toString(),
 				senderAccountId: senderAccount._id,
 				currencyType: currencyType,
 				value: decimalValue,
@@ -72,18 +73,21 @@ const mutation = mutationWithClientMutationId({
 				receiverAccountId: receiverAccount._id,
 			}).save();
 			
-			const event = {
-				transaction: transaction._id.toString(),
-			};
+			const event = {transaction: transaction._id.toString()};
 
 			redisPubSub.publish(PUB_SUB_EVENTS.TRANSACTION.ADDED, event);
+
+			console.log(transaction);
+			console.log(event);
 			
 			return event;
+
 		} catch(err) {
-			await session.abortSession();
+			console.log(err)
+			// await session.abortSession();
 			throw err;
 		} finally {
-			await session.endSession();
+			// await session.endSession();
 		};
 
 	},

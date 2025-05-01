@@ -5,7 +5,7 @@ import type { ConnectionArguments } from 'graphql-relay';
 import { ITransaction } from './TransactionModel';
 import { nodeInterface, registerTypeLoader } from '../node/typeRegister';
 import { TransactionLoader } from './TransactionLoader';
-import { AccountModel } from '../account/AccountModel';
+import { Account } from '../account/AccountModel';
 import { AccountType } from '../account/AccountType';
 
 const TransactionType = new GraphQLObjectType<ITransaction>({
@@ -16,26 +16,37 @@ const TransactionType = new GraphQLObjectType<ITransaction>({
 		sender: {
 			type: new GraphQLNonNull(AccountType),
 			resolve: async ({ senderAccountId }) => {
-				return AccountModel.findById(senderAccountId);
+				console.log("senderAccountId: ", senderAccountId)
+				return Account.findById(senderAccountId);
 			},
 		},
 		receiver: {
 			type: new GraphQLNonNull(AccountType),
 			resolve: async ({ receiverAccountId }) => {
-				return AccountModel.findById(receiverAccountId);
+				console.log("receiverAccountId: ", receiverAccountId)
+				return Account.findById(receiverAccountId);
 			},
 		},
 		value: {
 			type: new GraphQLNonNull(GraphQLString),
-			resolve: ({value}) => `${value}`,
+			resolve: ({value}) => {
+				console.log(value);
+				return value.toString();
+			},
 		},
 		description: {
 			type: GraphQLString,
-			resolve: ({description}) => description,
+			resolve: ({description}) => {
+				console.log(description);
+				return description;
+			},
 		},
 		createdAt: {
 			type: GraphQLString,
-			resolve: (transaction) => transaction.createdAt.toISOString(),
+			resolve: (transaction) => {
+				console.log(transaction.createdAt);
+				return transaction.createdAt.toISOString();
+			},
 		},
 	}),
 	interfaces: () => [nodeInterface],
